@@ -113,3 +113,17 @@ test("المعاينة المباشرة من الملفات تحمل التنس�
   assert.match(home, /href="\.\/assets\/site\.css"/);
   assert.match(home, /src="\.\/assets\/judyalkufa-logo\.svg"/);
 });
+
+test("GitHub Pages has physical routes for the permanent and legacy links pages", () => {
+  const cleanRoute = read("links/index.html");
+  const legacyHtmlRoute = read("p/links.html");
+  const legacyDirectoryRoute = read("p/links/index.html");
+
+  for (const html of [cleanRoute, legacyHtmlRoute, legacyDirectoryRoute]) {
+    assert.match(html, /(?:\.\.\/)+links\.html/);
+    assert.match(html, /rel="canonical" href="https:\/\/www\.judyalkufa\.org\/links"/);
+    assert.doesNotMatch(html, /Blogger|مدونة|حذف|محذوف|قفل|مقفلة/iu);
+  }
+
+  assert.ok(fs.existsSync(path.join(siteRoot, ".nojekyll")));
+});
