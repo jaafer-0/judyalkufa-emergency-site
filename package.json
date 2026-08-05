@@ -1,0 +1,7 @@
+{
+  "name": "judyalkufa-emergency-site",
+  "private": true,
+  "scripts": {
+    "test": "node test/site.test.js"
+  }
+}
