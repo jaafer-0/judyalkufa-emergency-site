@@ -99,3 +99,15 @@ test("الحزمة تستخدم أصول الهوية المحلية المعت�
   assert.match(css, /@font-face[\s\S]*Tajawal Local/);
   assert.match(css, /@font-face[\s\S]*Thmanyah Text Local/);
 });
+
+test("المعاينة المباشرة من الملفات تحمل التنسيق والشعار والخطوط", () => {
+  const home = read("index.html");
+  const links = read("links.html");
+  const css = read("assets/site.css");
+
+  assert.doesNotMatch(home, /(?:href|src)="\/assets\//);
+  assert.doesNotMatch(links, /(?:href|src)="\/assets\//);
+  assert.doesNotMatch(css, /url\("\/assets\//);
+  assert.match(home, /href="\.\/assets\/site\.css"/);
+  assert.match(home, /src="\.\/assets\/judyalkufa-logo\.svg"/);
+});
