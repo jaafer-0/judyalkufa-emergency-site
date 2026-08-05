@@ -142,3 +142,11 @@ test("internal navigation works on the GitHub Pages preview and the custom domai
   assert.doesNotMatch(home, /href="\/(?:links)?"/);
   assert.doesNotMatch(links, /href="\/(?:links)?"/);
 });
+
+test("بطاقة الموقع الرسمي في صفحة الروابط تربط إلى الصفحة الرئيسية وتعرض النطاق دون الوسم المرئي", () => {
+  const html = read("links/index.html");
+
+  assert.match(html, /<a class="contact-link" href="\.\.\/">/);
+  assert.match(html, /<a class="contact-link" href="\.\.\/">[\s\S]*?<span>judyalkufa\.org<\/span>[\s\S]*?<\/a>/);
+  assert.doesNotMatch(html, /<a class="contact-link" href="\.\.\/">[\s\S]*?<strong>الموقع الرسمي<\/strong>[\s\S]*?<\/a>/);
+});
