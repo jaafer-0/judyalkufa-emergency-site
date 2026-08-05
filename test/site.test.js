@@ -127,3 +127,14 @@ test("GitHub Pages has physical routes for the permanent and legacy links pages"
 
   assert.ok(fs.existsSync(path.join(siteRoot, ".nojekyll")));
 });
+
+test("internal navigation works on the GitHub Pages preview and the custom domain", () => {
+  const home = read("index.html");
+  const links = read("links.html");
+
+  assert.match(home, /class="identity" href="\.\/"/);
+  assert.match(home, /href="\.\/links\/"/);
+  assert.match(links, /class="identity" href="\.\/"/);
+  assert.doesNotMatch(home, /href="\/(?:links)?"/);
+  assert.doesNotMatch(links, /href="\/(?:links)?"/);
+});
