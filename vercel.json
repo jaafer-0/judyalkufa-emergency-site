@@ -15,7 +15,7 @@
   "rewrites": [
     {
       "source": "/links",
-      "destination": "/links.html"
+      "destination": "/links/index.html"
     }
   ],
   "headers": [

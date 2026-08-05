@@ -36,7 +36,7 @@ test("الصفحة الرئيسية تعرّف بالمؤسسة برسالة ت�
 });
 
 test("صفحة الروابط تعرض جميع القنوات الرسمية المعتمدة", () => {
-  const html = read("links.html");
+  const html = read("links/index.html");
   const officialLinks = [
     "https://www.instagram.com/judyalkufa",
     "https://www.youtube.com/@judyalkufa",
@@ -62,7 +62,7 @@ test("المسار القديم لصفحة التواصل ينتقل مؤقتً�
   });
   assert.deepEqual(config.rewrites.find((item) => item.source === "/links"), {
     source: "/links",
-    destination: "/links.html"
+    destination: "/links/index.html"
   });
   assert.equal(config.cleanUrls, undefined);
   assert.equal(config.trailingSlash, undefined);
@@ -73,10 +73,12 @@ test("الروابط غير المتاحة تبقى داخل هوية المؤس
 
   assert.match(html, /مؤسسة جودي الكوفة العلمية/);
   assert.match(html, /الصفحة غير متاحة مؤقتًا/);
-  assert.match(html, /href="\/"/);
-  assert.match(html, /href="\/links"/);
-  assert.match(html, /href="\/assets\/site\.css"/);
-  assert.match(html, /src="\/assets\/judyalkufa-logo\.svg"/);
+  assert.match(html, /<base id="site-base" href="\/"/);
+  assert.match(html, /location\.hostname === "jaafer-0\.github\.io"/);
+  assert.match(html, /href="\.\/"/);
+  assert.match(html, /href="links\/"/);
+  assert.match(html, /href="assets\/site\.css"/);
+  assert.match(html, /src="assets\/judyalkufa-logo\.svg"/);
   assert.doesNotMatch(html, /Blogger|مدونة|حذف|محذوف|قفل|مقفلة/iu);
 });
 
@@ -116,11 +118,13 @@ test("المعاينة المباشرة من الملفات تحمل التنس�
 
 test("GitHub Pages has physical routes for the permanent and legacy links pages", () => {
   const cleanRoute = read("links/index.html");
+  const legacyRootRoute = read("links.html");
   const legacyHtmlRoute = read("p/links.html");
   const legacyDirectoryRoute = read("p/links/index.html");
 
-  for (const html of [cleanRoute, legacyHtmlRoute, legacyDirectoryRoute]) {
-    assert.match(html, /(?:\.\.\/)+links\.html/);
+  assert.match(cleanRoute, /https:\/\/wa\.me\/9647718745996/);
+  for (const html of [legacyRootRoute, legacyHtmlRoute, legacyDirectoryRoute]) {
+    assert.match(html, /(?:\.\.\/)*links\//);
     assert.match(html, /rel="canonical" href="https:\/\/www\.judyalkufa\.org\/links"/);
     assert.doesNotMatch(html, /Blogger|مدونة|حذف|محذوف|قفل|مقفلة/iu);
   }
@@ -130,11 +134,11 @@ test("GitHub Pages has physical routes for the permanent and legacy links pages"
 
 test("internal navigation works on the GitHub Pages preview and the custom domain", () => {
   const home = read("index.html");
-  const links = read("links.html");
+  const links = read("links/index.html");
 
   assert.match(home, /class="identity" href="\.\/"/);
   assert.match(home, /href="\.\/links\/"/);
-  assert.match(links, /class="identity" href="\.\/"/);
+  assert.match(links, /class="identity" href="\.\.\/"/);
   assert.doesNotMatch(home, /href="\/(?:links)?"/);
   assert.doesNotMatch(links, /href="\/(?:links)?"/);
 });
