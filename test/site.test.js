@@ -75,6 +75,8 @@ test("الروابط غير المتاحة تبقى داخل هوية المؤس
   assert.match(html, /الصفحة غير متاحة مؤقتًا/);
   assert.match(html, /href="\/"/);
   assert.match(html, /href="\/links"/);
+  assert.match(html, /href="\/assets\/site\.css"/);
+  assert.match(html, /src="\/assets\/judyalkufa-logo\.svg"/);
   assert.doesNotMatch(html, /Blogger|مدونة|حذف|محذوف|قفل|مقفلة/iu);
 });
 
