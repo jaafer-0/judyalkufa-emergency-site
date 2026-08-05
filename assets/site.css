@@ -1,3 +1,43 @@
+@font-face {
+  font-family: "Tajawal Local";
+  src: url("/assets/tajawal-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal Local";
+  src: url("/assets/tajawal-medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal Local";
+  src: url("/assets/tajawal-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Thmanyah Text Local";
+  src: url("/assets/thmanyah-text-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Thmanyah Text Local";
+  src: url("/assets/thmanyah-text-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+}
+
 :root {
   --navy: #0a2338;
   --teal: #006970;
@@ -21,7 +61,7 @@ body {
   background:
     linear-gradient(rgba(255,255,255,.93), rgba(255,255,255,.93)),
     repeating-linear-gradient(90deg, transparent 0 47px, rgba(10,35,56,.06) 48px);
-  font-family: "Tajawal", "Noto Sans Arabic", "Segoe UI", Arial, sans-serif;
+  font-family: "Thmanyah Text Local", Georgia, serif;
 }
 
 a { color: inherit; }
@@ -53,6 +93,14 @@ a { color: inherit; }
 
 .identity strong,
 .identity small { display: block; }
+.identity strong,
+.site-header > p,
+.service-status,
+h1,
+.eyebrow,
+.contact-link strong,
+.primary-action,
+.secondary-action { font-family: "Tajawal Local", "Segoe UI", Arial, sans-serif; }
 .identity strong { font-size: 18px; }
 .identity small { margin-top: 3px; color: #b9d2d2; font-size: 12px; }
 .site-header > p { margin: 0; color: #e2c27e; font-size: 13px; font-weight: 800; }

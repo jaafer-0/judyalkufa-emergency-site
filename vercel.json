@@ -1,7 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
-  "trailingSlash": false,
   "redirects": [
     {
       "source": "/p/links.html",
@@ -12,6 +10,12 @@
       "source": "/p/links",
       "destination": "/links",
       "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/links",
+      "destination": "/links.html"
     }
   ],
   "headers": [

@@ -20,9 +20,18 @@ function test(name, callback) {
 
 test("الصفحة الرئيسية تعرّف بالمؤسسة برسالة تقنية محايدة", () => {
   const html = read("index.html");
+  const officialLinks = [
+    "https://www.instagram.com/judyalkufa",
+    "https://www.youtube.com/@judyalkufa",
+    "https://www.tiktok.com/@judyalkufa",
+    "https://t.me/judyalkufa",
+    "https://wa.me/9647718745996"
+  ];
 
   assert.match(html, /مؤسسة جودي الكوفة العلمية/);
   assert.match(html, /تحديث تقني مؤقت/);
+  assert.match(html, /للتواصل معنا/);
+  for (const href of officialLinks) assert.ok(html.includes(href), `missing ${href}`);
   assert.doesNotMatch(html, /Blogger|مدونة|حذف|محذوف|قفل|مقفلة/iu);
 });
 
@@ -51,7 +60,12 @@ test("المسار القديم لصفحة التواصل ينتقل مؤقتً�
     destination: "/links",
     permanent: false
   });
-  assert.equal(config.cleanUrls, true);
+  assert.deepEqual(config.rewrites.find((item) => item.source === "/links"), {
+    source: "/links",
+    destination: "/links.html"
+  });
+  assert.equal(config.cleanUrls, undefined);
+  assert.equal(config.trailingSlash, undefined);
 });
 
 test("الروابط غير المتاحة تبقى داخل هوية المؤسسة", () => {
@@ -72,4 +86,16 @@ test("الحزمة تضيف ترويسات حماية أساسية لجميع ا
   assert.equal(headers["X-Content-Type-Options"], "nosniff");
   assert.equal(headers["Referrer-Policy"], "strict-origin-when-cross-origin");
   assert.equal(headers["X-Frame-Options"], "DENY");
+});
+
+test("الحزمة تستخدم أصول الهوية المحلية المعتمدة", () => {
+  const css = read("assets/site.css");
+  const home = read("index.html");
+
+  assert.ok(fs.existsSync(path.join(siteRoot, "assets/judyalkufa-logo.svg")));
+  assert.ok(fs.existsSync(path.join(siteRoot, "assets/tajawal-bold.woff2")));
+  assert.ok(fs.existsSync(path.join(siteRoot, "assets/thmanyah-text-regular.woff2")));
+  assert.match(home, /\/assets\/judyalkufa-logo\.svg/);
+  assert.match(css, /@font-face[\s\S]*Tajawal Local/);
+  assert.match(css, /@font-face[\s\S]*Thmanyah Text Local/);
 });
